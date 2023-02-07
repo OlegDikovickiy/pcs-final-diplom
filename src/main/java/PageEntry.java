@@ -1,7 +1,7 @@
 public class PageEntry implements Comparable<PageEntry> {
   private final String pdfName;
   private final int page;
-  private  int count;
+  private int count;
 
   public PageEntry(String pdfName, int page, int count) {
     this.pdfName = pdfName;
@@ -11,6 +11,13 @@ public class PageEntry implements Comparable<PageEntry> {
 
   @Override
   public int compareTo(PageEntry o) {
-    return o.count - this.count;
+    int result = o.count - this.count;
+    if (result == 0) {
+      result = this.pdfName.compareTo(o.pdfName);
+      if (result == 0) {
+        result = this.page - o.page;
+      }
+    }
+    return result;
   }
 }
