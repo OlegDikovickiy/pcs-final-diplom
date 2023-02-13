@@ -10,7 +10,7 @@ import java.util.*;
 
 
 public class BooleanSearchEngine implements SearchEngine {
-  protected static Map<String, List<PageEntry>> wordMap;
+  protected Map<String, List<PageEntry>> wordMap;
 
   public BooleanSearchEngine(File pdfsDir) throws IOException {
     wordMap = Index.getIndex().getIndexMap();
@@ -52,6 +52,7 @@ public class BooleanSearchEngine implements SearchEngine {
           }
         }
       }
+      wordMap.values().forEach(Collections::sort);
     }
   }
 
@@ -59,7 +60,6 @@ public class BooleanSearchEngine implements SearchEngine {
   public List<PageEntry> search(String word) {
     String lowRegisterWord = word.toLowerCase();
     List<PageEntry> resultList = wordMap.getOrDefault(lowRegisterWord, Collections.emptyList());
-    Collections.sort(resultList);
     return resultList;
   }
 }

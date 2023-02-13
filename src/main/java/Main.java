@@ -4,6 +4,8 @@ import com.google.gson.GsonBuilder;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Collections;
+import java.util.List;
 
 
 public class Main {
@@ -14,6 +16,7 @@ public class Main {
       BooleanSearchEngine engine = new BooleanSearchEngine(new File("pdfs"));
       Gson gson = new GsonBuilder().create();
 
+
       while (true) {
         try (Socket connection = serverSocket.accept();
              BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
@@ -21,6 +24,7 @@ public class Main {
 
           System.out.println("Подключен новый клиент!");
           String word = in.readLine();
+
           var resultPage = engine.search(word);
           out.println(gson.toJson(resultPage));
         } catch (IOException exception) {
